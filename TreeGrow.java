@@ -52,7 +52,7 @@ public class TreeGrow {
 	
 		
 	public static void main(String[] args) {
-		SunData sundata = new SunData();
+	 SunData sundata = new SunData();
 		
 		// check that number of command line arguments is correct
 		if(args.length != 1)
@@ -66,7 +66,7 @@ public class TreeGrow {
 		System.out.println("Data loaded");
 		
 		frameX = sundata.sunmap.getDimX();
-		frameY = sundata.sunmap.getDimY();
+	   frameY = sundata.sunmap.getDimY();
 		setupGUI(frameX, frameY, sundata.trees);
 		
 		// create and start simulation loop here as separate thread

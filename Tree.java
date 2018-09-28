@@ -38,7 +38,8 @@ public
 	// return the average sunlight for the cells covered by the tree
 	float sunexposure(Land land){
 		// to do 
-		return 0.0f; // not correct
+      float newextent = ext  / 1000;
+		return newextent; // not correct
 	}
 	
 	// is the tree extent within the provided range [minr, maxr)
@@ -48,6 +49,6 @@ public
 	
 	// grow a tree according to its sun exposure
 	void sungrow(Land land) {
-		// to do
+		
 	}
 }
