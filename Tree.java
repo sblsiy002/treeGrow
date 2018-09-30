@@ -38,7 +38,7 @@ public
 	// return the average sunlight for the cells covered by the tree
 	float sunexposure(Land land){
 		// to do 
-      float newextent = ext  / 1000;
+      float newextent = (ext)  / growfactor;
 		return newextent; // not correct
 	}
 	
@@ -49,6 +49,6 @@ public
 	
 	// grow a tree according to its sun exposure
 	void sungrow(Land land) {
-		
+		land.resetShade();
 	}
 }

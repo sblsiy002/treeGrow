@@ -36,8 +36,8 @@ public class ForestPanel extends JPanel implements Runnable {
 					g.fillRect(forest[rt].getY() - (int) forest[rt].getExt(), forest[rt].getX() - (int) forest[rt].getExt(),
 						   2*(int) forest[rt].getExt()+1,2*(int) forest[rt].getExt()+1);
 				}
-				// g.setColor(Color.black);
-				// g.fillRect(forest[rt].getY(), forest[rt].getX(), 1, 1); // draw the trunk
+				 g.setColor(Color.black);
+				 g.fillRect(forest[rt].getY(), forest[rt].getX(), 1, 1); // draw the trunk
 			}
 			minh = maxh;  // next band of trees
 			maxh += 2.0f;

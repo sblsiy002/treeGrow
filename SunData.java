@@ -15,14 +15,16 @@ public class SunData{
 	// read in sun exposure and tree data from file
 	void readData(String fileName){ 
 		try{ 
-			Scanner sc = new Scanner(new File(fileName));
-			
+        // System.out.print(fileName+"\n");
+			Scanner sc = new Scanner(new File("..\\"+fileName));
+			//System.out.print(fileName+"\n");
 			// load sunmap
 			int dimx = sc.nextInt(); 
 			int dimy = sc.nextInt();
 			sunmap = new Land(dimx,dimy);
 			for(int x = 0; x < dimx; x++)
 				for(int y = 0; y < dimy; y++) {
+           // System.out.print("("+x+","+y+")");
 					sunmap.setFull(x,y,sc.nextFloat());	
 				}
 			sunmap.resetShade();
