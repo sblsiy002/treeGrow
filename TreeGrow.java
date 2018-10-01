@@ -1,5 +1,5 @@
 package treeGrow;
-
+import java.util.concurrent.atomic.*;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,8 @@ public class TreeGrow {
    static int frameY;
    static String d="";
    static ForestPanel fp;
-
+   static AtomicBoolean cond;
+   static AtomicInteger countl=new AtomicInteger(0);
 	// start timer
    private static void tick(){
       startTime = System.currentTimeMillis();
@@ -32,22 +33,37 @@ public class TreeGrow {
       frame.setPreferredSize(fsize);
       frame.setSize(800, 800);
       JButton btnPlay=new JButton("Play");
+      JLabel lbC=new JLabel("Count");
+      JTextField count=new JTextField();
+      count.setSize(30, 30);
       JButton btnReset=new JButton("Reset");
       JButton btnEnd=new JButton("End");
       JButton btnPause=new JButton("Pause");
       btnPlay.setSize(100, 30);
       btnReset.setSize(100, 30);
       btnEnd.setSize(100, 30);
+      
       btnPause.setSize(100, 30);
       JPanel p1 = new JPanel();
       p1.add(btnReset);
       p1.add(Box.createRigidArea(new Dimension(15,15)));
       p1.add(btnPause);
+       btnPause.addActionListener(
+            new java.awt.event.ActionListener() {
+               public void actionPerformed(java.awt.event.ActionEvent evt) {
+                  cond=new AtomicBoolean();        
+               }
+            });
+
       p1.add(Box.createRigidArea(new Dimension(15,0)));
       p1.add(btnPlay);
       p1.add(Box.createRigidArea(new Dimension(15,0)));
       p1.add(btnEnd);
-       float count=1;
+      p1.add(Box.createRigidArea(new Dimension(15,0)));
+      p1.add(lbC);
+      p1.add(Box.createRigidArea(new Dimension(15,0)));
+      p1.add(count);
+      // float count=1;
       btnEnd.addActionListener(
             new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,7 +76,7 @@ public class TreeGrow {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                   
                   for(int t = 0; t < trees.length; t++){  
-                   trees[t].setExt(1);               
+                   trees[t].setExt(0.4f);               
                    }                      
                }
             });
@@ -95,11 +111,13 @@ public class TreeGrow {
        btnPlay.addActionListener(
             new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
+               while(true){
+               count.setText(countl.incrementAndGet()+"");
                   for(int t = 0; t < trees.length; t++){  
-                   trees[t].setExt(trees[t].getExt()+0.2f );
+                   trees[t].setExt(trees[t].getExt());
                   }
                }
-              
+              }
               });
         
    }
