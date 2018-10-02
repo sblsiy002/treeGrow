@@ -1,12 +1,16 @@
 
 package treeGrow;
 import java.util.*;
+import java.text.DecimalFormat;
 public class Land{
 	
 	// to do
    int x=0;
    int y=0;
    float v=0.0f;
+   float DataF[][];
+   float DataS[][];
+
    SunData sunData;
    List<Integer> Arrx=new ArrayList<Integer>();
    List<Integer> Arry=new ArrayList<Integer>();
@@ -19,6 +23,9 @@ public class Land{
    Land(int dx, int dy) {
       this.x=dx;
       this.y=dy;
+      DataF=new float[x][y];
+      DataS=new float[x][y];
+   
    }
 
 	// return the number of landscape cells in the x dimension
@@ -33,69 +40,48 @@ public class Land{
 	// Needs to be done after each growth pass of the simulator
    void resetShade() {
    	// to do
-   }
+      for(int u=0;u<x;u++){
+         System.arraycopy(DataF[u],0,DataS[u],0,x);
+      
+      }}
 	
 	// return the sun exposure of the initial unshaded landscape at position <x,y?
    float getFull(int x, int y) {
-   	
-      synchronized(Arrx){
-         Iterator<Integer> itr=Arrx.iterator();
-         Iterator<Integer> itr1=Arry.iterator();
-         Iterator<Float> itr2=ArrV.iterator();
-         while(itr.hasNext()&&itr1.hasNext()&&itr2.hasNext()){
-            if(itr.next()==x && itr1.next()==y){
-               v=itr2.next(); 
-            }
-         
-         }
-      }
-   
-      return v;// incorrect value
+      float vv=0.0f;
+      vv=DataF[x][y];
+      return vv;// incorrect value
    
    }
          
 	
 	// set the sun exposure of the initial unshaded landscape at position <x,y> to <val>
    void setFull(int x, int y, float val) {
-      
-      Arrx.add(x);
-      Arry.add(y);
-      ArrV.add(val);
-     // Arrx=Collections.synchronizedList(Arrx);
-     // Arry=Collections.synchronizedList(Arry);
-     // ArrV=Collections.synchronizedList(ArrV);
-   
+      DataF[x][y]=val;
    }
 	
 	// return the current sun exposure of the shaded landscape at position <x,y>
    float getShade(int x, int y) {
-      return 0.1f*getFull(x,y); // incorrect value
+      return DataS[x][y]; // incorrect value
    }
 	
 	// set the sun exposure of the shaded landscape at position <x,y> to <val>
    void setShade(int x, int y, float val){
-   	
-      synchronized(Arrx){
-         Iterator<Integer> itr=Arrx.iterator();
-         Iterator<Integer> itr1=Arry.iterator();
-         Iterator<Float> itr2=ArrV.iterator();
-         while(itr.hasNext()&&itr1.hasNext()&&itr2.hasNext()){
-            if(itr.next()==x && itr1.next()==y){
-               itr.remove();
-               itr1.remove();
-               itr2.remove();
-                Arrx.add(x);
-                Arry.add(y);
-                ArrV.add(val);
-            }
-         
-         }
-      }
+      DataS[x][y]=val;   
    }
 	
 	// reduce the sun exposure of the shaded landscape to 10% of the original
 	// within the extent of <tree>
    void shadow(Tree tree){
    	// to do
+      DecimalFormat df=new DecimalFormat("0");
+      float ex=tree.getExt();
+      int b=tree.getY();
+      int a=tree.getX();
+      int h=Integer.parseInt(df.format(ex));
+      for(int i=(a-h);i<(a+h);i++){
+         for(int j=(b-h);j<(b+h);j++){
+            DataF[i][j]=DataF[i][j]*0.1f;
+         
+         }}
    }
 }

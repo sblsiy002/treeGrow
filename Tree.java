@@ -49,6 +49,6 @@ public class Tree{
 	
 	// grow a tree according to its sun exposure
    void sungrow(Land land) {
-      land=new Land(xpos,ypos);
+      this.setExt(land.getFull(getX(),getY())-land.getShade(getX(),getY()));
    }
 }

@@ -16,7 +16,7 @@ public class SunData{
    void readData(String fileName){ 
       try{ 
         
-         Scanner sc = new Scanner(new File(fileName));
+         Scanner sc = new Scanner(new File("..\\"+fileName));
       	
       	// load sunmap
          int dimx = sc.nextInt(); 
