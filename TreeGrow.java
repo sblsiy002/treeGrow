@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 public class TreeGrow {
    static long startTime = 0;
@@ -16,6 +17,7 @@ public class TreeGrow {
    static Tree tree[];
    static AtomicInteger ai=new AtomicInteger(0);
    static SunData sundata = new SunData();
+   static SimulationStart sim; 
 
    static volatile boolean flag=true;
 
@@ -40,8 +42,10 @@ public class TreeGrow {
       frame.setSize(800, 800);
       JButton btnPlay=new JButton("Play");
       JButton btnReset=new JButton("Reset");
+      JLabel lb=new JLabel("NUmber of years:  ");
       JButton btnEnd=new JButton("End");
       JButton btnPause=new JButton("Pause");
+      JTextField txtCount = new JTextField("",5);
       btnPlay.setSize(100, 30);
       btnReset.setSize(100, 30);
       btnEnd.setSize(100, 30);
@@ -54,11 +58,21 @@ public class TreeGrow {
       p1.add(btnPlay);
       p1.add(Box.createRigidArea(new Dimension(15,0)));
       p1.add(btnEnd);
+      p1.add(Box.createRigidArea(new Dimension(15,0)));
+      p1.add(lb);
+      p1.add(Box.createRigidArea(new Dimension(15,0)));
+      p1.add(txtCount);
+      p1.add(Box.createRigidArea(new Dimension(150,0)));
+
       float count=1;
       btnEnd.addActionListener(
             new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                  System.exit(0);         
+               int d=JOptionPane.YES_NO_OPTION;
+               JOptionPane.showConfirmDialog(null,"Do you want to exit?","",JOptionPane.YES_NO_OPTION);
+               if(d==JOptionPane.YES_OPTION){
+                  System.exit(0);
+                  }else{}         
                }
             });
       
@@ -79,7 +93,14 @@ public class TreeGrow {
                }
             });
    
-       
+       btnPlay.addActionListener(
+            new java.awt.event.ActionListener() {
+               public void actionPerformed(java.awt.event.ActionEvent evt) {
+                  sim = new SimulationStart(sundata);
+                  sim.start();             
+               }
+              
+            });
    
    
       p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS)); 
@@ -107,23 +128,11 @@ public class TreeGrow {
       frame.setVisible(true);
       Thread fpt = new Thread(fp);
       fpt.start();
-      btnPlay.addActionListener(
-            new java.awt.event.ActionListener() {
-               public void actionPerformed(java.awt.event.ActionEvent evt) {
-                  play();             
-               }
-              
-            });
+      
         
    }
 	
-   public static void play(){
-      ParallelThreads p=new ParallelThreads(sundata); 
-      for(int t = 0; t < tree.length; t++){  
-         tree[t].setExt(0.4f+ai.incrementAndGet());               
-      } 
-      p.start();  
-   }
+ 
    public static void main(String[] args) {
          	
    	// check that number of command line arguments is correct
